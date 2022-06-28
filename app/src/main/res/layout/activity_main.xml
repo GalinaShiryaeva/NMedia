@@ -1,227 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/common_spacing"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_avatar"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/common_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/barrier_top">
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:src="@sample/posts_avatars" />
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/posts_avatar_size"
-            android:layout_height="@dimen/posts_avatar_size"
-            android:src="@mipmap/ic_launcher"
-            tools:src="@sample/posts_avatars"
-            app:layout_constraintBottom_toBottomOf="@id/layout_avatar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_avatar"
-            app:srcCompat="@mipmap/ic_launcher" />
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="@dimen/posts_title_font_size"
+        app:layout_constraintBottom_toTopOf="@id/published"
+        app:layout_constraintEnd_toStartOf="@id/avatar_menu"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@sample/posts.json/data/author" />
 
-        <TextView
-            android:id="@+id/header_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:ellipsize="end"
-            android:singleLine="true"
-            tools:text="@sample/posts.json/data/author"
-            android:textSize="@dimen/posts_title_font_size"
-            app:layout_constraintBottom_toTopOf="@id/header_date"
-            app:layout_constraintStart_toEndOf="@id/avatar"
-            app:layout_constraintTop_toTopOf="@id/layout_avatar"
-            app:layout_constraintEnd_toStartOf="@id/avatar_menu"
-            app:layout_constraintVertical_chainStyle="packed" />
+    <TextView
+        android:id="@+id/published"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/author"
+        tools:text="@sample/posts.json/data/published" />
 
-        <TextView
-            android:id="@+id/header_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            tools:text="@sample/posts.json/data/published"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/avatar"
-            app:layout_constraintTop_toBottomOf="@+id/header_title" />
+    <ImageView
+        android:id="@+id/avatar_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/common_spacing"
+        android:src="@drawable/ic_dots_menu_24"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatar" />
 
-        <ImageView
-            android:id="@+id/avatar_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="@dimen/common_spacing"
-            android:src="@drawable/ic_baseline_more_vert_24"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="@id/layout_avatar"
-            app:layout_constraintEnd_toEndOf="@id/layout_avatar"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:layout_constraintTop_toBottomOf="@id/layout_avatar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:constraint_referenced_ids="avatar" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_text"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/common_spacing"
-        app:layout_constraintTop_toBottomOf="@id/barrier_top"
-        app:layout_constraintStart_toStartOf="parent"
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_spacing"
+        android:autoLink="web"
+        android:gravity="start|top"
+        android:textSize="@dimen/posts_text_font_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <TextView
-            android:id="@+id/post_text"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="start|top"
-            tools:text="@sample/posts.json/data/content"
-            android:textSize="@dimen/posts_text_font_size"
-            android:autoLink="web"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_top"
+        tools:text="@sample/posts.json/data/content" />
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier_bottom"
+        android:id="@+id/barrier_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:layout_constraintTop_toBottomOf="@id/layout_text"
+        app:constraint_referenced_ids="content"
+        app:layout_constraintStart_toStartOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+    <ImageView
+        android:id="@+id/footer_likes_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_spacing"
+        android:src="@drawable/ic_like_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/barrier_footer" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/footer_likes_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/minimal_spacing"
+        android:text="10"
+        android:textColor="@color/text_color_dark_grey"
+        app:layout_constraintBottom_toBottomOf="@id/footer_likes_icon"
+        app:layout_constraintStart_toEndOf="@id/footer_likes_icon"
+        app:layout_constraintTop_toTopOf="@id/footer_likes_icon" />
 
-        android:id="@+id/layout_footer"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/footer_height"
-        android:padding="@dimen/common_spacing"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/footer_shares_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_spacing"
+        android:src="@drawable/ic_share_24"
+        app:layout_constraintBottom_toBottomOf="@id/footer_likes_icon"
+        app:layout_constraintEnd_toStartOf="@id/footer_shares_number"
+        app:layout_constraintStart_toEndOf="@id/footer_likes_number"
+        app:layout_constraintTop_toTopOf="@id/footer_likes_icon" />
+
+    <TextView
+        android:id="@+id/footer_shares_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/minimal_spacing"
+        android:text="5"
+        android:textColor="@color/text_color_dark_grey"
+        app:layout_constraintBottom_toBottomOf="@id/footer_shares_icon"
+        app:layout_constraintStart_toEndOf="@id/footer_shares_icon"
+        app:layout_constraintTop_toTopOf="@id/footer_shares_icon" />
+
+    <ImageView
+        android:id="@+id/footer_viewed_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/minimal_spacing"
+        android:src="@drawable/ic_viewed_24"
+        app:layout_constraintBottom_toBottomOf="@id/footer_likes_icon"
+        app:layout_constraintEnd_toStartOf="@id/footer_viewed_number"
+        app:layout_constraintTop_toBottomOf="@id/barrier_footer"
+        app:layout_constraintTop_toTopOf="@id/footer_likes_icon" />
+
+    <TextView
+        android:id="@+id/footer_viewed_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/minimal_spacing"
+        android:text="15"
+        android:textColor="@color/text_color_dark_grey"
+        app:layout_constraintBottom_toBottomOf="@id/footer_viewed_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier_bottom">
-
-        <ImageView
-            android:id="@+id/footer_likes_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_like_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/footer_likes_number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/footer_likes_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/minimal_spacing"
-            android:text="10"
-            android:textColor="@color/text_color_dark_grey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/footer_likes_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/footer_shares_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:src="@drawable/ic_share_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/footer_shares_number"
-            app:layout_constraintStart_toEndOf="@id/footer_likes_number"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/footer_shares_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/minimal_spacing"
-            android:text="5"
-            android:textColor="@color/text_color_dark_grey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/footer_shares_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier_footer"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:barrierDirection="start"
-            app:constraint_referenced_ids="footer_viewed_icon"/>
-
-        <ImageView
-            android:id="@+id/footer_viewed_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_viewed_24"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/footer_viewed_number"
-            app:layout_constraintStart_toEndOf="@id/barrier_footer"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <TextView
-            android:id="@+id/footer_viewed_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15"
-            android:textColor="@color/text_color_dark_grey"
-            android:layout_marginStart="@dimen/minimal_spacing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/footer_viewed_icon"/>
-<!--
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <ImageView
-                android:id="@+id/footer_viewed_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_viewed_24"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/footer_viewed_number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/footer_viewed_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"
-                android:textColor="@color/text_color_dark_grey"
-                android:layout_marginStart="@dimen/minimal_spacing"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/footer_viewed_icon"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
--->
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="@id/footer_viewed_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
