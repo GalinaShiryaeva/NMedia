@@ -39,7 +39,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             content = "\uD83D\uDE80 24 сентября стартует новый поток бесплатного курса «Диджитал-старт: первый шаг к востребованной профессии» — за две недели вы попробуете себя в разных профессиях и определите, что подходит именно вам → http://netolo.gy/fQ",
             published = "21 сентября в 10:12",
             likedByMe = false,
-            likes = 1_202_010,
+            likes = 1_299_999,
             shared = 10
         ),
         Post(
