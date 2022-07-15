@@ -92,7 +92,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun get(): LiveData<List<Post>> = data
 
-    override fun likeById(id: Int) {
+    override fun likeById(id: Long) {
         posts = posts.map {
             if (it.id != id) it else it.copy(
                 likedByMe = !it.likedByMe,
@@ -102,12 +102,31 @@ class PostRepositoryInMemoryImpl : PostRepository {
         data.value = posts
     }
 
-    override fun shareById(id: Int) {
+    override fun shareById(id: Long) {
         posts = posts.map {
             if (it.id != id) it else it.copy(
                 shared = it.shared + 1
             )
         }
         data.value = posts
+    }
+
+    override fun removeById(id: Long) {
+        posts = posts.filter { it.id != id }
+        data.value = posts
+    }
+
+    override fun save(post: Post) {
+        data.value = if (post.id == 0L) {
+            listOf(
+                post.copy(
+                    id = posts.firstOrNull()?.id ?: 1L
+                )
+            ) + posts
+        } else {
+            posts.map {
+                if (it.id == post.id) it.copy(content = post.content) else it
+            }
+        }
     }
 }

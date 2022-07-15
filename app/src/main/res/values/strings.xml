@@ -14,4 +14,10 @@
         \n\n\tDonec luctus egestas est ut placerat. Fusce nibh tellus, rhoncus sed ullamcorper et,
         laoreet nec odio. Curabitur id egestas felis. Morbi a tellus sed ligula sollicitudin
         feugiat. -> http://netolo.gy/fyb</string>
+
+    <string name="post_menu_remove">Remove</string>
+    <string name="post_menu_edit">Edit</string>
+
+    <string name="post_input_hint">Post text</string>
+    <string name="empty_post_error">Post is blank</string>
 </resources>
