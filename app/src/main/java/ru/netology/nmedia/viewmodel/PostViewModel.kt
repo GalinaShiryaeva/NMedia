@@ -11,7 +11,9 @@ val empty = Post(
     "",
     "",
     "",
-    false
+    false,
+    0,
+    0
 )
 
 class PostViewModel : ViewModel() {
@@ -26,8 +28,8 @@ class PostViewModel : ViewModel() {
     fun save() {
         edited.value?.let {
             repository.save(it)
-            edited.value = empty
         }
+        edited.value = empty
     }
 
     fun edit(post: Post) {

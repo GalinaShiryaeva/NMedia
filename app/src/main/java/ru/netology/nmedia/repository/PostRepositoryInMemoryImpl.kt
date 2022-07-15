@@ -120,7 +120,10 @@ class PostRepositoryInMemoryImpl : PostRepository {
         data.value = if (post.id == 0L) {
             listOf(
                 post.copy(
-                    id = posts.firstOrNull()?.id ?: 1L
+                    id = posts.firstOrNull()?.id?.plus(1) ?: 1L,
+                    published = "now",
+                    author = "Netology",
+                    likedByMe = false
                 )
             ) + posts
         } else {
@@ -128,5 +131,6 @@ class PostRepositoryInMemoryImpl : PostRepository {
                 if (it.id == post.id) it.copy(content = post.content) else it
             }
         }
+        posts = data.value.orEmpty()
     }
 }
