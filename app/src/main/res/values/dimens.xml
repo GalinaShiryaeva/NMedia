@@ -4,7 +4,9 @@
     <dimen name="common_spacing_small">8dp</dimen>
     <dimen name="minimal_spacing">8dp</dimen>
     <dimen name="posts_avatar_size">48dp</dimen>
+    <dimen name="tap_size">48dp</dimen>
     <dimen name="posts_title_font_size">14sp</dimen>
     <dimen name="posts_text_font_size">16sp</dimen>
     <dimen name="footer_height">56dp</dimen>
+    <dimen name="icon_button_min_size">24dp</dimen>
 </resources>
