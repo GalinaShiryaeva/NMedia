@@ -45,14 +45,9 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            likeCount.text = validateText(post.likes)
-            shareCount.text = validateText(post.shared)
-            val likeImage = if (post.likedByMe) {
-                R.drawable.ic_liked_24
-            } else {
-                R.drawable.ic_like_24
-            }
-            like.setImageResource(likeImage)
+            like.text = validateText(post.likes)
+            share.text = validateText(post.shared)
+            like.isChecked = post.likedByMe
             like.setOnClickListener {
                 listener.onLike(post)
             }
