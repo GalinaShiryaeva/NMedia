@@ -23,4 +23,5 @@
     <string name="description_post_share">Поделиться</string>
     <string name="description_post_viewed">Просмотрено</string>
     <string name="description_post_menu">Меню</string>
+    <string name="empty_content_error">Пустой контент</string>
 </resources>

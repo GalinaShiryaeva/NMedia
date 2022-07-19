@@ -24,4 +24,6 @@
     <string name="description_post_share">Share</string>
     <string name="description_post_viewed">Viewed</string>
     <string name="description_post_menu">Menu</string>
+
+    <string name="empty_content_error">Content is empty</string>
 </resources>
