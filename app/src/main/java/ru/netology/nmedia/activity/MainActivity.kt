@@ -1,6 +1,8 @@
 package ru.netology.nmedia.activity
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.launch
 import androidx.activity.viewModels
@@ -65,6 +67,33 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onRemove(post: Post) {
                     viewModel.removeById(post.id)
+                }
+
+                override fun onVideo(post: Post) {
+                    val intent = Intent().apply {
+                        action = Intent.ACTION_VIEW
+                        putExtra(Intent.EXTRA_TEXT, post.video)
+                        type = "text/plain"
+                    }
+//                    val videoIntent = Intent.createChooser(
+//                        intent,
+//                        getString(R.string.chooser_share_post)
+//                    )
+                    val appIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("vnd.youtube:" + post.video)
+                    )
+                    val webIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("http://www.youtube.com/watch?v=" + post.video)
+                    )
+                    try {
+                        startActivity(appIntent)
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(webIntent)
+                    }
+
+                    //videoPlayerLauncher.launch()
                 }
             }
         )
