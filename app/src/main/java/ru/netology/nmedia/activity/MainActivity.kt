@@ -70,15 +70,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onVideo(post: Post) {
-                    val intent = Intent().apply {
-                        action = Intent.ACTION_VIEW
-                        putExtra(Intent.EXTRA_TEXT, post.video)
-                        type = "text/plain"
-                    }
-//                    val videoIntent = Intent.createChooser(
-//                        intent,
-//                        getString(R.string.chooser_share_post)
-//                    )
                     val appIntent = Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse("vnd.youtube:" + post.video)
@@ -92,8 +83,6 @@ class MainActivity : AppCompatActivity() {
                     } catch (e: ActivityNotFoundException) {
                         startActivity(webIntent)
                     }
-
-                    //videoPlayerLauncher.launch()
                 }
             }
         )

@@ -47,14 +47,22 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
+
             video.setImageResource(R.mipmap.video_example)
             video.isVisible = !post.video.isNullOrBlank()
+            if (video.isVisible) {
+                video.setOnClickListener {
+                    listener.onVideo(post)
+                }
+            }
+
             like.text = validateText(post.likes)
-            share.text = validateText(post.shared)
             like.isChecked = post.likedByMe
             like.setOnClickListener {
                 listener.onLike(post)
             }
+
+            share.text = validateText(post.shared)
             share.setOnClickListener {
                 listener.onShare(post)
             }
