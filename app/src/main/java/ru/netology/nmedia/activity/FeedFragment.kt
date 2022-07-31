@@ -4,49 +4,52 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.activity.result.launch
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.SimpleItemAnimator
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.PostEventListener
 import ru.netology.nmedia.adapter.PostsAdapter
-import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+class FeedFragment : Fragment() {
 
-        val viewModel: PostViewModel by viewModels()
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
 
-        val newPostLauncher = registerForActivityResult(NewPostActivityContract()) { text ->
-            text ?: return@registerForActivityResult
-            viewModel.editContent(text)
-            viewModel.save()
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding = FragmentFeedBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
-        val editPostLauncher = registerForActivityResult(EditPostActivityContract()) { text ->
-            text ?: return@registerForActivityResult
-            viewModel.editContent(text)
-            viewModel.save()
-        }
+        val adapter = PostsAdapter(object : PostEventListener {
 
-        val adapter = PostsAdapter(
-            object : PostEventListener {
                 override fun onLike(post: Post) {
                     viewModel.likeById(post.id)
                 }
 
                 override fun onShare(post: Post) {
+
                     val intent = Intent().apply {
                         action = Intent.ACTION_SEND
                         putExtra(Intent.EXTRA_TEXT, post.content)
                         type = "text/plain"
                     }
+
                     val shareIntent = Intent.createChooser(
                         intent,
                         getString(R.string.chooser_share_post)
@@ -56,13 +59,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onEdit(post: Post) {
-                    Intent().apply {
-                        action = Intent.ACTION_EDIT
-                        putExtra(Intent.EXTRA_TEXT, post.content)
-                        type = "text/plain"
-                    }
                     viewModel.edit(post)
-                    editPostLauncher.launch(post.content)
+                    findNavController().navigate(
+                        R.id.action_feedFragment_to_editPostFragment,
+                        Bundle().apply {
+                            textArg = post.content
+                        }
+                    )
                 }
 
                 override fun onRemove(post: Post) {
@@ -84,17 +87,19 @@ class MainActivity : AppCompatActivity() {
                         startActivity(webIntent)
                     }
                 }
-            }
-        )
+            })
+
         binding.list.adapter = adapter
         (binding.list.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
-        viewModel.data.observe(this) { posts ->
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
         }
 
         binding.create.setOnClickListener {
-            newPostLauncher.launch()
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
+
+        return binding.root
     }
 }

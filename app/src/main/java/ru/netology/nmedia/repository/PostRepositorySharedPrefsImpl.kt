@@ -14,7 +14,6 @@ class PostRepositorySharedPrefsImpl(
     private val prefs = context.getSharedPreferences("repo", Context.MODE_PRIVATE)
     private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
     private val key = "posts"
-    private var nextId = 1L
     private var posts = emptyList<Post>()
     private var data = MutableLiveData(posts)
 
@@ -55,22 +54,19 @@ class PostRepositorySharedPrefsImpl(
     }
 
     override fun save(post: Post) {
-        if (post.id == 0L) {
-            posts = listOf(
+        posts = if (post.id == 0L) {
+            listOf(
                 post.copy(
-                    id = nextId++,
+                    id = posts.firstOrNull()?.id?.plus(1) ?: 1L,
                     published = "now",
                     author = "Netology",
                     likedByMe = false
                 )
             ) + posts
-            data.value = posts
-            sync()
-            return
-        }
-
-        posts.map {
-            if (it.id == post.id) it.copy(content = post.content) else it
+        } else {
+            posts.map {
+                if (it.id != post.id) it else it.copy(content = post.content)
+            }
         }
         data.value = posts
         sync()
