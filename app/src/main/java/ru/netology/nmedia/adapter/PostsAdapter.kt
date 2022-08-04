@@ -18,6 +18,7 @@ interface PostEventListener {
     fun onEdit(post: Post)
     fun onRemove(post: Post)
     fun onVideo(post: Post)
+    fun onPost(post: Post)
 }
 
 class PostsAdapter(
@@ -65,6 +66,10 @@ class PostViewHolder(
             share.text = validateText(post.shared)
             share.setOnClickListener {
                 listener.onShare(post)
+            }
+
+            content.setOnClickListener {
+                listener.onPost(post)
             }
 
             menu.setOnClickListener {

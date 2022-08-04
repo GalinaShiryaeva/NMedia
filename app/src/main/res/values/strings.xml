@@ -28,4 +28,6 @@
     <string name="empty_content_error">Content is empty</string>
     <string name="create_new_post">Create new post</string>
     <string name="chooser_share_post">Choose App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
