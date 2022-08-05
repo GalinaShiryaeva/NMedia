@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositorySharedPrefsImpl
+import ru.netology.nmedia.repository.PostRepositoryFileImpl
 
 val empty = Post(
     0,
@@ -20,7 +20,7 @@ val empty = Post(
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: PostRepository = PostRepositorySharedPrefsImpl(application)
+    private val repository: PostRepository = PostRepositoryFileImpl(application)
 
     val data = repository.get()
     val edited = MutableLiveData(empty)
@@ -41,12 +41,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun editContent(content: String) {
-        edited.value?.let {
-            val trimmed = content.trim()
-            if (trimmed == it.content) {
-                return
-            }
-            edited.value = it.copy(content = trimmed)
+        val text = content.trim()
+        if (edited.value?.content == text) {
+            return
         }
+        edited.value = edited.value?.copy(content = text)
     }
 }

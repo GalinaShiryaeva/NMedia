@@ -35,11 +35,13 @@ android {
 
 dependencies {
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def arch_version = "2.1.0"
     def lifecycle_version = "2.5.0"
     def fragment_version = "1.5.0"
     def activity_version = "1.2.1"
     def gson_version = "2.9.0"
+    def nav_version = "2.5.0"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -51,6 +53,8 @@ dependencies {
     implementation "androidx.activity:activity-ktx:$activity_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "com.google.code.gson:gson:$gson_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     testImplementation "androidx.arch.core:core-testing:$arch_version"
     testImplementation 'junit:junit:4.+'

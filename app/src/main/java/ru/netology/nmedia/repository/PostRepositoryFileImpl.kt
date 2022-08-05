@@ -13,7 +13,6 @@ class PostRepositoryFileImpl(
     private val gson = Gson()
     private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
     private val filename = "posts.json"
-    private var nextId = 1L
     private var posts = emptyList<Post>()
     private val data = MutableLiveData(posts)
 
@@ -59,22 +58,19 @@ class PostRepositoryFileImpl(
     }
 
     override fun save(post: Post) {
-        if (post.id == 0L) {
-            posts = listOf(
+        posts = if (post.id == 0L) {
+            listOf(
                 post.copy(
-                    //id = posts.firstOrNull()?.id?.plus(1) ?: 1L,
-                    id = nextId++,
+                    id = posts.firstOrNull()?.id?.plus(1) ?: 1L,
                     published = "now",
                     author = "Netology",
                     likedByMe = false
                 )
             ) + posts
-            data.value = posts
-            sync()
-            return
-        }
-        posts = posts.map {
-            if (it.id == post.id) it.copy(content = post.content) else it
+        } else {
+            posts.map {
+                if (it.id != post.id) it else it.copy(content = post.content)
+            }
         }
         data.value = posts
         sync()

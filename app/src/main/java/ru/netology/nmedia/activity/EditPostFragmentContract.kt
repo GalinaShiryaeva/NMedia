@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 
-class EditPostActivityContract : ActivityResultContract<String, String?>() {
+class EditPostFragmentContract : ActivityResultContract<String, String?>() {
 
     override fun createIntent(context: Context, input: String): Intent =
-        Intent(context, EditPostActivity::class.java).apply {
+        Intent(context, EditPostFragment::class.java).apply {
             this.putExtra(Intent.EXTRA_TEXT, input)
         }
 

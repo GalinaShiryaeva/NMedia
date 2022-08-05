@@ -10,7 +10,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostDiffCallback
-import kotlin.math.floor
+import ru.netology.nmedia.util.validateText
 
 interface PostEventListener {
     fun onLike(post: Post)
@@ -18,6 +18,7 @@ interface PostEventListener {
     fun onEdit(post: Post)
     fun onRemove(post: Post)
     fun onVideo(post: Post)
+    fun onPost(post: Post)
 }
 
 class PostsAdapter(
@@ -67,6 +68,10 @@ class PostViewHolder(
                 listener.onShare(post)
             }
 
+            content.setOnClickListener {
+                listener.onPost(post)
+            }
+
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.post_menu)
@@ -89,29 +94,3 @@ class PostViewHolder(
     }
 }
 
-fun validateText(number: Int): String {
-    return when (number) {
-        in 0..999 -> "$number"
-        in 1_000..10_000 -> adjustNumberUnder10K(number) + "K"
-        in 10_001..999_999 -> adjustNumberUnder1M(number) + "K"
-        else -> adjustNumberOver1M(number) + "M"
-    }
-}
-
-fun adjustNumberUnder10K(number: Int): String {
-    val f = floor((number / 1_000.0) * 10) / 10
-    return if ((f * 10).toInt() % 10 == 0) {
-        floor(f).toInt().toString()
-    } else f.toString()
-}
-
-fun adjustNumberUnder1M(number: Int): String {
-    return floor((number / 1_000.0)).toInt().toString()
-}
-
-fun adjustNumberOver1M(number: Int): String {
-    val f = floor((number / 1_000_000.0) * 10) / 10
-    return if ((f * 10).toInt() % 10 == 0) {
-        floor(f).toInt().toString()
-    } else f.toString()
-}
