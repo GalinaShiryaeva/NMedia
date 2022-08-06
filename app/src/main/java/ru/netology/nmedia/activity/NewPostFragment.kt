@@ -22,11 +22,17 @@ class NewPostFragment : Fragment() {
         ownerProducer = ::requireParentFragment
     )
 
+//    private val repository: PostRepository = PostRepositorySQLiteImpl(
+//        AppDb.getInstance(requireActivity().application).postDao
+//    )
+//
+//    private val viewModel: PostViewModel by lazy { PostViewModel(repository) }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentNewPostBinding.inflate(
             inflater,
             container,
