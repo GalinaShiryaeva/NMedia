@@ -123,6 +123,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             COLUMN_ID,
             COLUMN_AUTHOR,
             COLUMN_CONTENT,
+            COLUMN_PUBLISHED,
             COLUMN_LIKED_BY_ME,
             COLUMN_LIKES,
             COLUMN_SHARED,
