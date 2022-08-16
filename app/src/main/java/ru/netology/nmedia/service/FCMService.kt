@@ -4,7 +4,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -47,18 +46,7 @@ class FCMService : FirebaseMessagingService() {
                     )
                 }
             }
-//            if (Action.values().none { action ->
-//                    action.name == it
-//                }) {
-//                println("Wrong action!")
-//                Toast.makeText(
-//                    baseContext, "No applicable action provided", Toast.LENGTH_SHORT
-//                ).show()
-//                return@let
-//            }
-
         } catch (e: IllegalArgumentException) {
-            Toast.makeText(baseContext, "Wrong action", Toast.LENGTH_LONG).show()
             println("Wrong action!")
             return
         } catch (e: Exception) {
@@ -72,6 +60,13 @@ class FCMService : FirebaseMessagingService() {
     }
 
     private fun handleLike(content: Like) {
+//        val intent = Intent(this, AppActivity::class.java).apply {
+//            putExtra(Intent.EXTRA_TEXT, "extra text")
+//        }
+//        val contentIntent = PendingIntent.getActivity(
+//            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+//        )
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(
@@ -81,7 +76,9 @@ class FCMService : FirebaseMessagingService() {
                     content.postAuthor,
                 )
             )
+            .setContentText("Content text")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            //.setContentIntent(contentIntent)
             .build()
 
         NotificationManagerCompat.from(this)
