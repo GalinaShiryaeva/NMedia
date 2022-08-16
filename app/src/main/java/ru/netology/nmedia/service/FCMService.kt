@@ -10,7 +10,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import ru.netology.nmedia.R
-import kotlin.random.Random
 
 class FCMService : FirebaseMessagingService() {
 
@@ -42,6 +41,12 @@ class FCMService : FirebaseMessagingService() {
                         gson.fromJson(
                             message.data[content],
                             Like::class.java
+                        )
+                    )
+                    Action.POST -> handlePost(
+                        gson.fromJson(
+                            message.data[content],
+                            Post::class.java
                         )
                     )
                 }
@@ -82,12 +87,33 @@ class FCMService : FirebaseMessagingService() {
             .build()
 
         NotificationManagerCompat.from(this)
-            .notify(Random.nextInt(100_000), notification)
+            .notify(1, notification)
+    }
+
+    private fun handlePost(content: Post) {
+
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_user_posted,
+                    content.userName,
+                    content.content
+                )
+            )
+            .setContentText(content.content)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(content.content))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        NotificationManagerCompat.from(this)
+            .notify(2, notification)
     }
 }
 
 enum class Action {
     LIKE,
+    POST
 }
 
 data class Like(
@@ -95,4 +121,11 @@ data class Like(
     val userName: String,
     val postId: Long,
     val postAuthor: String,
+)
+
+data class Post(
+    val userId: Long,
+    val userName: String,
+    val postId: Long,
+    val content: String
 )
